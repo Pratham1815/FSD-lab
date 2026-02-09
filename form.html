@@ -1,0 +1,161 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>CodeVerse Identity Portal</title>
+
+<link href="https://fonts.googleapis.com/css2?family=Orbitron&display=swap" rel="stylesheet">
+<script src="script.js"></script>
+
+<style>
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    background: black;
+    overflow: hidden;
+    font-family: 'Orbitron', sans-serif;
+}
+
+/* MATRIX CANVAS */
+canvas {
+    position: fixed;
+    top: 0;
+    left: 0;
+    z-index: -1;
+}
+
+/* FORM CONTAINER */
+.container {
+    background: rgba(0, 0, 0, 0.85);
+    border: 1px solid cyan;
+    box-shadow: 0 0 25px cyan;
+    width: 400px;
+    padding: 30px;
+    border-radius: 15px;
+    color: #fff;
+    margin: auto;
+    margin-top: 8vh;
+}
+
+h2 {
+    text-align: center;
+    color: cyan;
+    margin-bottom: 20px;
+}
+
+label {
+    font-size: 13px;
+    color: #b3ffff;
+}
+
+input {
+    width: 100%;
+    padding: 10px;
+    margin-top: 6px;
+    margin-bottom: 14px;
+    border-radius: 8px;
+    border: none;
+    outline: none;
+}
+
+input:disabled {
+    background: #111;
+    color: #00ffff;
+}
+
+input:focus {
+    box-shadow: 0 0 10px cyan;
+}
+
+button {
+    width: 100%;
+    padding: 12px;
+    background: cyan;
+    border: none;
+    border-radius: 10px;
+    font-size: 15px;
+    cursor: pointer;
+}
+
+button:hover {
+    background: #00e6e6;
+}
+</style>
+</head>
+
+<body>
+
+<canvas id="matrix"></canvas>
+
+<div class="container">
+<h2>🧠 CodeVerse Access Portal</h2>
+
+<form onsubmit="return validateForm()">
+
+<label>👨‍💻 Full Name</label>
+<input type="text" id="name" value="Prathamesh Desale">
+
+<label>📧 Email ID</label>
+<input type="text" id="email" value="prathamesh.desale@mitwpu.edu.in">
+
+<label>🎓 College</label>
+<input type="text" value="MIT World Peace University" disabled>
+
+<label>📚 Branch & Year</label>
+<input type="text" value="Computer Science Engineering - TY" disabled>
+
+<label>🔐 Password</label>
+<input type="password" id="password" placeholder="Min 6 characters">
+
+<label>📱 Mobile Number</label>
+<input type="text" id="mobile" placeholder="10-digit number">
+
+<button type="submit">Authenticate 🚀</button>
+
+</form>
+</div>
+
+<script>
+/* MATRIX ANIMATION */
+const canvas = document.getElementById("matrix");
+const ctx = canvas.getContext("2d");
+
+canvas.width = window.innerWidth;
+canvas.height = window.innerHeight;
+
+const letters = "01ABCDEFGHIJKLMNOPQRSTUVWXYZ";
+const fontSize = 16;
+const columns = canvas.width / fontSize;
+const drops = [];
+
+for (let x = 0; x < columns; x++) {
+    drops[x] = 1;
+}
+
+function drawMatrix() {
+    ctx.fillStyle = "rgba(0, 0, 0, 0.05)";
+    ctx.fillRect(0, 0, canvas.width, canvas.height);
+
+    ctx.fillStyle = "#00ffff";
+    ctx.font = fontSize + "px monospace";
+
+    for (let i = 0; i < drops.length; i++) {
+        const text = letters.charAt(Math.floor(Math.random() * letters.length));
+        ctx.fillText(text, i * fontSize, drops[i] * fontSize);
+
+        if (drops[i] * fontSize > canvas.height && Math.random() > 0.975) {
+            drops[i] = 0;
+        }
+        drops[i]++;
+    }
+}
+
+setInterval(drawMatrix, 33);
+</script>
+
+</body>
+</html>
